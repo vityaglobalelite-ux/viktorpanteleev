@@ -1,21 +1,31 @@
 @import "tailwindcss";
 
+/* Лендинг сознательно тёмный (стиль «красная линия») — светлой темы нет. */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #08080a;
+  --foreground: #f4f4f5;
+  --surface: #101013;
+  --surface-2: #141418;
+  --line: rgba(255, 255, 255, 0.08);
+  --muted: #9d9da8;
+  --accent: #ff3b45;
+  --accent-strong: #e5232e;
+  --accent-deep: #7f1018;
+  color-scheme: dark;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
+  --color-surface: var(--surface);
+  --color-surface-2: var(--surface-2);
+  --color-line: var(--line);
+  --color-muted: var(--muted);
+  --color-accent: var(--accent);
+  --color-accent-strong: var(--accent-strong);
+  --color-accent-deep: var(--accent-deep);
   --font-sans: var(--font-inter);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  --font-display: var(--font-unbounded);
 }
 
 html {
@@ -26,4 +36,86 @@ body {
   background: var(--background);
   color: var(--foreground);
   font-family: var(--font-sans), Arial, Helvetica, sans-serif;
+}
+
+::selection {
+  background: var(--accent-strong);
+  color: #fff;
+}
+
+/* --- Красная линия: диагональный луч, фирменный мотив --- */
+.red-beam {
+  background: linear-gradient(
+    115deg,
+    transparent 0%,
+    transparent 42%,
+    rgba(229, 35, 46, 0.85) 49%,
+    #ff5a63 50%,
+    rgba(229, 35, 46, 0.85) 51%,
+    transparent 58%,
+    transparent 100%
+  );
+  filter: blur(26px);
+}
+
+.red-hairline {
+  background: linear-gradient(
+    90deg,
+    transparent,
+    var(--accent-strong) 35%,
+    #ff7a81 50%,
+    var(--accent-strong) 65%,
+    transparent
+  );
+}
+
+/* Сетка-подложка, едва заметная */
+.bg-grid {
+  background-image: linear-gradient(var(--line) 1px, transparent 1px),
+    linear-gradient(90deg, var(--line) 1px, transparent 1px);
+  background-size: 72px 72px;
+  mask-image: radial-gradient(ellipse 90% 70% at 50% 0%, black 30%, transparent 75%);
+}
+
+/* --- Появление при скролле --- */
+.reveal {
+  opacity: 0;
+  transform: translateY(26px);
+  transition: opacity 0.7s ease, transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+  transition-delay: var(--reveal-delay, 0ms);
+}
+
+.reveal.revealed {
+  opacity: 1;
+  transform: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  .reveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}
+
+/* --- Галереи скринов в карточках --- */
+.shots {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255, 255, 255, 0.18) transparent;
+}
+
+.shots::-webkit-scrollbar {
+  height: 6px;
+}
+
+.shots::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.18);
+  border-radius: 999px;
+}
+
+.shots::-webkit-scrollbar-track {
+  background: transparent;
 }
