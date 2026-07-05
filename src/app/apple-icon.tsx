@@ -3,7 +3,6 @@ import { ImageResponse } from "next/og";
 export const size = { width: 180, height: 180 };
 export const contentType = "image/png";
 
-// Латиница вместо кириллицы: дефолтный шрифт ImageResponse не покрывает Cyrillic.
 export default function AppleIcon() {
   return new ImageResponse(
     (
@@ -33,14 +32,13 @@ export default function AppleIcon() {
         <div
           style={{
             display: "flex",
-            fontSize: 76,
-            fontWeight: 800,
+            fontSize: 68,
+            fontWeight: 700,
             letterSpacing: -2,
-            color: "#f4f4f5",
+            color: "#ff3b45",
           }}
         >
-          <div>VP</div>
-          <div style={{ color: "#ff3b45" }}>.</div>
+          {"</>"}
         </div>
       </div>
     ),

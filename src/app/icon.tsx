@@ -3,7 +3,6 @@ import { ImageResponse } from "next/og";
 export const size = { width: 32, height: 32 };
 export const contentType = "image/png";
 
-// Латиница вместо кириллицы: дефолтный шрифт ImageResponse не покрывает Cyrillic.
 export default function Icon() {
   return new ImageResponse(
     (
@@ -29,14 +28,13 @@ export default function Icon() {
         <div
           style={{
             display: "flex",
-            fontSize: 20,
-            fontWeight: 800,
+            fontSize: 16,
+            fontWeight: 700,
             letterSpacing: -1,
-            color: "#f4f4f5",
+            color: "#ff3b45",
           }}
         >
-          <div>V</div>
-          <div style={{ color: "#ff3b45" }}>.</div>
+          {"</>"}
         </div>
       </div>
     ),
