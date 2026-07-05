@@ -1,5 +1,5 @@
 var R=require("../../chunks/[turbopack]_runtime.js")("server/app/opengraph-image/route.js")
-R.c("server/chunks/[root-of-the-server]__1uqs_e-._.js")
+R.c("server/chunks/[root-of-the-server]__1yg_ld-._.js")
 R.c("server/chunks/[root-of-the-server]__0xuaoik._.js")
 R.c("server/chunks/_next-internal_server_app_opengraph-image_route_actions_1n32_cs.js")
 R.m(9191)
