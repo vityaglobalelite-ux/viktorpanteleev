@@ -19,11 +19,10 @@ export const site = {
   ],
   since: 2021,
   projectsDone: "30+",
-  // TODO: заменить на реальный домен перед деплоем
-  url: "https://viktorpanteleev.com",
+  url: "https://viktorpanteleev.ru",
   locale: "ru_RU",
   links: {
-    email: "vityaglobalelite@gmail.com",
+    email: "viktorpanteleevdevelopment@gmail.com",
     // TODO: указать ник в Telegram, например "https://t.me/username" —
     // кнопка в контактах появится автоматически.
     telegram: "",
