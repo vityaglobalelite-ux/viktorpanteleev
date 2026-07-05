@@ -12,16 +12,13 @@ import {
 // ⚙ Project settings → General → Your apps → добавить Web app (</>) →
 // скопировать значения из firebaseConfig сюда.
 const firebaseConfig = {
-  apiKey: "TODO_ВСТАВИТЬ_API_KEY",
+  apiKey: "AIzaSyByASC0LR_0vQo8-6MMvpVk184vC39MOx0",
   authDomain: "test-job-54xb1d.firebaseapp.com",
   projectId: "test-job-54xb1d",
-  appId: "TODO_ВСТАВИТЬ_APP_ID",
+  appId: "1:605333513125:web:9d31a4e4114f7c0f0a7e4c",
 };
 
 export async function submitLead(lead: { name: string; contact: string }) {
-  if (firebaseConfig.apiKey.startsWith("TODO")) {
-    throw new Error("firebase-not-configured");
-  }
   const app = getApps().length ? getApp() : initializeApp(firebaseConfig);
   const db = getFirestore(app);
   await addDoc(collection(db, "leads"), {
