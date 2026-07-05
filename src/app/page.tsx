@@ -1,8 +1,11 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import { site } from "@/lib/site";
-import { projects, screenSrc } from "@/lib/projects";
+import { projects } from "@/lib/projects";
 import { ContactModal } from "./contact-modal";
+import { Gallery } from "./gallery";
+import { GlowCard } from "./glow-card";
+import { LeadLink } from "./lead-link";
 import { Reveal } from "./reveal";
 
 export const metadata: Metadata = {
@@ -151,12 +154,9 @@ export default function Home() {
               </li>
             ))}
           </ul>
-          <a
-            href="#contact"
-            className="inline-flex h-9 items-center rounded-full bg-accent-strong px-4 text-sm font-medium text-white transition-colors hover:bg-accent"
-          >
+          <LeadLink className="inline-flex h-9 items-center rounded-full bg-accent-strong px-4 text-sm font-medium text-white transition-colors hover:bg-accent">
             Обсудить проект
-          </a>
+          </LeadLink>
         </nav>
       </header>
 
@@ -168,7 +168,7 @@ export default function Home() {
             <div className="red-beam absolute -top-1/4 right-[-20%] h-[150%] w-[80%] rotate-6 opacity-50 sm:right-[-5%] sm:w-[60%]" />
           </div>
 
-          <div className="relative mx-auto grid w-full max-w-6xl items-center gap-12 px-6 pb-16 pt-14 sm:pt-20 lg:grid-cols-[1.1fr_0.9fr] lg:gap-6 lg:pb-0">
+          <div className="relative mx-auto grid w-full max-w-6xl items-center gap-12 px-6 pb-16 pt-14 sm:pt-20 lg:grid-cols-[1.1fr_0.9fr] lg:gap-6 lg:pb-20">
             <div className="flex max-w-xl flex-col items-start">
               <span className="mb-6 inline-flex items-center gap-2 rounded-full border border-line bg-white/[0.03] px-3.5 py-1.5 text-xs text-muted">
                 <span className="relative flex size-2" aria-hidden>
@@ -185,7 +185,26 @@ export default function Home() {
                 </span>
               </h1>
 
-              <p className="mt-6 text-base leading-7 text-muted sm:text-lg sm:leading-8">
+              {/* Фото на мобилке — сразу на первом экране, между заголовком
+                  и текстом; текст мягко наезжает на затухающий низ фото. */}
+              <div className="relative mx-auto mt-8 w-full max-w-56 lg:hidden">
+                <div
+                  aria-hidden
+                  className="absolute inset-x-0 bottom-0 top-8 rounded-full bg-[radial-gradient(closest-side,rgba(229,35,46,0.32),transparent)] blur-2xl"
+                />
+                <Image
+                  src="/images/viktor.png"
+                  alt="Виктор Пантелеев — разработчик мобильных приложений и сайтов"
+                  width={639}
+                  height={934}
+                  loading="eager"
+                  fetchPriority="high"
+                  className="relative w-full drop-shadow-[0_24px_48px_rgba(0,0,0,0.5)] [mask-image:linear-gradient(to_bottom,black_58%,transparent_94%)]"
+                  sizes="(min-width: 1024px) 384px, 224px"
+                />
+              </div>
+
+              <p className="relative z-[1] -mt-10 text-base leading-7 text-muted sm:text-lg sm:leading-8 lg:mt-6">
                 Меня зовут Виктор Пантелеев. С {site.since} года разрабатываю
                 мобильные приложения, Telegram и MAX мини-аппы, сайты и
                 лендинги, подключаю ИИ. Берусь за проект целиком: от идеи и
@@ -193,12 +212,9 @@ export default function Home() {
               </p>
 
               <div className="mt-8 flex flex-wrap items-center gap-4">
-                <a
-                  href="#contact"
-                  className="inline-flex h-12 items-center rounded-full bg-accent-strong px-6 font-medium text-white shadow-[0_0_28px_rgba(229,35,46,0.35)] transition-colors hover:bg-accent"
-                >
+                <LeadLink className="inline-flex h-12 items-center rounded-full bg-accent-strong px-6 font-medium text-white shadow-[0_0_28px_rgba(229,35,46,0.35)] transition-colors hover:bg-accent">
                   Обсудить проект
-                </a>
+                </LeadLink>
                 <a
                   href="#projects"
                   className="inline-flex h-12 items-center rounded-full border border-line bg-white/[0.03] px-6 font-medium transition-colors hover:border-white/25"
@@ -208,7 +224,7 @@ export default function Home() {
               </div>
 
               <dl className="mt-12 grid w-full grid-cols-3 gap-4 border-t border-line pt-8">
-                <div className="flex flex-col">
+                <div className="flex flex-col items-center text-center">
                   <dt className="order-last mt-1 text-xs leading-5 text-muted sm:text-sm">
                     сданных проектов
                   </dt>
@@ -216,7 +232,7 @@ export default function Home() {
                     {site.projectsDone}
                   </dd>
                 </div>
-                <div className="flex flex-col">
+                <div className="flex flex-col items-center text-center">
                   <dt className="order-last mt-1 text-xs leading-5 text-muted sm:text-sm">
                     лет в разработке
                   </dt>
@@ -224,18 +240,18 @@ export default function Home() {
                     {years}
                   </dd>
                 </div>
-                <div className="flex flex-col">
+                <div className="flex flex-col items-center text-center">
                   <dt className="order-last mt-1 text-xs leading-5 text-muted sm:text-sm">
-                    ответ на заявку
+                    проектов под ключ
                   </dt>
                   <dd className="font-display text-2xl font-semibold text-accent sm:text-3xl">
-                    24 ч
+                    100%
                   </dd>
                 </div>
               </dl>
             </div>
 
-            <div className="relative mx-auto w-full max-w-xs sm:max-w-sm lg:self-end">
+            <div className="relative mx-auto hidden w-full max-w-sm lg:-mb-20 lg:block lg:self-end">
               <div
                 aria-hidden
                 className="absolute inset-x-0 bottom-0 top-12 rounded-full bg-[radial-gradient(closest-side,rgba(229,35,46,0.32),transparent)] blur-2xl"
@@ -248,7 +264,7 @@ export default function Home() {
                 loading="eager"
                 fetchPriority="high"
                 className="relative w-full drop-shadow-[0_24px_48px_rgba(0,0,0,0.5)] [mask-image:linear-gradient(to_bottom,black_72%,transparent_98%)]"
-                sizes="(max-width: 640px) 320px, 384px"
+                sizes="(min-width: 1024px) 384px, 224px"
               />
               <div className="absolute left-0 top-24 hidden rounded-xl border border-line bg-surface/85 px-4 py-2.5 shadow-lg backdrop-blur sm:-left-6 sm:block">
                 <p className="font-display text-lg font-semibold leading-none">
@@ -291,7 +307,7 @@ export default function Home() {
             <div className="mt-12 grid gap-5 sm:grid-cols-2">
               {services.map((s, i) => (
                 <Reveal key={s.title} delay={i * 80}>
-                  <article className="group h-full rounded-2xl border border-line bg-surface p-6 transition-colors hover:border-accent/40 sm:p-7">
+                  <GlowCard className="group h-full rounded-2xl border border-line bg-surface p-6 transition-colors hover:border-accent/40 sm:p-7">
                     <div className="mb-5 inline-flex rounded-xl border border-line bg-white/[0.03] p-3 text-accent transition-colors group-hover:border-accent/40">
                       {s.icon}
                     </div>
@@ -299,7 +315,7 @@ export default function Home() {
                       {s.title}
                     </h3>
                     <p className="mt-2.5 leading-7 text-muted">{s.text}</p>
-                  </article>
+                  </GlowCard>
                 </Reveal>
               ))}
             </div>
@@ -323,7 +339,7 @@ export default function Home() {
               </h2>
               <p className="mt-4 max-w-2xl leading-7 text-muted">
                 Часть работ под NDA, поэтому здесь — то, что можно показать.
-                Скрины листаются: свайпайте, чтобы посмотреть все экраны.
+                Скрины листаются, а по клику открываются в полном размере.
               </p>
             </Reveal>
 
@@ -335,35 +351,7 @@ export default function Home() {
                   className={p.wide ? "sm:col-span-2" : ""}
                 >
                   <article className="group flex h-full flex-col rounded-2xl border border-line bg-surface p-4 transition-[border-color,box-shadow] duration-300 hover:border-accent/40 hover:shadow-[0_0_40px_rgba(229,35,46,0.12)] sm:p-5">
-                    {p.wide ? (
-                      <Image
-                        src={screenSrc(p, 1)}
-                        alt={`${p.name} — ${p.tagline}`}
-                        width={p.width}
-                        height={p.height}
-                        className="w-full rounded-xl border border-line"
-                        sizes="(max-width: 1152px) 100vw, 1104px"
-                        loading="lazy"
-                      />
-                    ) : (
-                      <div
-                        className="shots -mx-1 flex snap-x snap-mandatory gap-3 overflow-x-auto px-1 pb-2"
-                        aria-label={`Скриншоты приложения ${p.name}`}
-                      >
-                        {Array.from({ length: p.screens }, (_, n) => (
-                          <Image
-                            key={n}
-                            src={screenSrc(p, n + 1)}
-                            alt={`${p.name} — ${p.tagline}. Экран ${n + 1} из ${p.screens}`}
-                            width={p.width}
-                            height={p.height}
-                            className="h-[360px] w-auto shrink-0 snap-start rounded-xl border border-line sm:h-[400px]"
-                            sizes="240px"
-                            loading="lazy"
-                          />
-                        ))}
-                      </div>
-                    )}
+                    <Gallery project={p} />
 
                     <div className="flex flex-1 flex-col p-2 pt-5">
                       <h3 className="font-display text-lg font-semibold tracking-tight">
@@ -398,12 +386,9 @@ export default function Home() {
                     реалистичные сроки и оценку. Это бесплатно и ни к чему не
                     обязывает.
                   </p>
-                  <a
-                    href="#contact"
-                    className="mt-6 inline-flex h-11 items-center rounded-full bg-accent-strong px-5 font-medium text-white transition-colors hover:bg-accent"
-                  >
+                  <LeadLink className="mt-6 inline-flex h-11 items-center rounded-full bg-accent-strong px-5 font-medium text-white transition-colors hover:bg-accent">
                     Обсудить идею
-                  </a>
+                  </LeadLink>
                 </article>
               </Reveal>
             </div>
@@ -522,8 +507,8 @@ export default function Home() {
                 Есть идея? Давайте обсудим
               </h2>
               <p className="mt-5 max-w-xl leading-8 text-muted">
-                Расскажите о задаче в паре предложений — отвечу в течение дня,
-                предложу подход, сроки и оценку.
+                Расскажите о задаче в паре предложений — предложу подход,
+                реалистичные сроки и оценку. Бесплатно и ни к чему не обязывает.
               </p>
               <div className="mt-9 flex flex-wrap items-center justify-center gap-4">
                 <ContactModal />

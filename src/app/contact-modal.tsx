@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { site } from "@/lib/site";
 
 type Status = "idle" | "sending" | "success" | "error";
@@ -21,6 +21,14 @@ export function ContactModal() {
     dialogRef.current?.showModal();
   };
   const close = () => dialogRef.current?.close();
+
+  // Кнопки «Обсудить проект/идею» по всей странице открывают эту же модалку
+  // через событие (см. lead-link.tsx) — без прокрутки к контактам.
+  useEffect(() => {
+    const onOpen = () => open();
+    window.addEventListener("open-lead-modal", onOpen);
+    return () => window.removeEventListener("open-lead-modal", onOpen);
+  }, []);
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -91,8 +99,8 @@ export function ContactModal() {
                 Заявка отправлена
               </h2>
               <p className="mt-3 leading-7 text-muted">
-                Спасибо! Свяжусь с вами в ближайшее время — обычно отвечаю в
-                течение дня.
+                Спасибо! Свяжусь с вами в ближайшее время — обсудим задачу и
+                предложу план с оценкой.
               </p>
               <button
                 type="button"
