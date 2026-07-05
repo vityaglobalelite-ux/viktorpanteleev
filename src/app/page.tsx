@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import { site } from "@/lib/site";
 import { projects, screenSrc } from "@/lib/projects";
+import { ContactModal } from "./contact-modal";
 import { Reveal } from "./reveal";
 
 export const metadata: Metadata = {
@@ -525,16 +526,7 @@ export default function Home() {
                 предложу подход, сроки и оценку.
               </p>
               <div className="mt-9 flex flex-wrap items-center justify-center gap-4">
-                <a
-                  href={`mailto:${site.links.email}`}
-                  className="inline-flex h-12 items-center gap-2.5 rounded-full bg-accent-strong px-6 font-medium text-white shadow-[0_0_28px_rgba(229,35,46,0.35)] transition-colors hover:bg-accent"
-                >
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" className="size-5" aria-hidden>
-                    <rect x="3" y="5" width="18" height="14" rx="2.5" />
-                    <path d="m3.5 7 8.5 6 8.5-6" />
-                  </svg>
-                  Написать на почту
-                </a>
+                <ContactModal />
                 {site.links.telegram && (
                   <a
                     href={site.links.telegram}

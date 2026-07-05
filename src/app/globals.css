@@ -101,6 +101,28 @@ body {
   }
 }
 
+/* --- Модалка заявки --- */
+dialog.modal[open] {
+  animation: modal-in 0.28s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+dialog.modal::backdrop {
+  backdrop-filter: blur(4px);
+}
+
+@keyframes modal-in {
+  from {
+    opacity: 0;
+    transform: translateY(14px) scale(0.97);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  dialog.modal[open] {
+    animation: none;
+  }
+}
+
 /* --- Галереи скринов в карточках --- */
 .shots {
   scrollbar-width: thin;
