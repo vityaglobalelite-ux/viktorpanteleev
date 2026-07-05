@@ -1,0 +1,78 @@
+rules_version = '2';
+
+// Email/Password Auth + профиль users/{uid} со статусом допуска.
+// В Console: Authentication → Email/Password → Enable.
+// Подтверждение: Firebase Console или `node seed.js --approve-email=...`
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    function isOwner(uid) {
+      return isSignedIn() && request.auth.uid == uid;
+    }
+
+    function userDoc(uid) {
+      return get(/databases/$(database)/documents/users/$(uid)).data;
+    }
+
+    function isApproved() {
+      return isSignedIn()
+        && exists(/databases/$(database)/documents/users/$(request.auth.uid))
+        && userDoc(request.auth.uid).status == 'approved';
+    }
+
+    match /users/{uid} {
+      allow list: if false;
+      allow delete: if false;
+      allow read: if isOwner(uid);
+
+      allow create: if isOwner(uid)
+        && !exists(/databases/$(database)/documents/users/$(uid))
+        && request.resource.data.status == 'pending'
+        && request.resource.data.email is string
+        && request.resource.data.email.size() >= 3
+        && request.resource.data.platform is string
+        && request.resource.data.platform.size() >= 1;
+
+      allow update: if isOwner(uid)
+        && request.resource.data.status == resource.data.status
+        && request.resource.data.email == resource.data.email
+        && request.resource.data.platform == resource.data.platform
+        && request.resource.data.diff(resource.data)
+            .affectedKeys()
+            .hasOnly(['lastSeenAt']);
+    }
+
+    match /vpn_servers/{serverId} {
+      allow create, update, delete: if false;
+      allow read: if isApproved();
+    }
+
+    // Клиентские логи ошибок (PC + Android). Только запись своих записей
+    // залогиненным юзером; читаем/правим из Firebase Console.
+    match /client_logs/{logId} {
+      allow read, update, delete: if false;
+      allow create: if isSignedIn()
+        && request.resource.data.uid == request.auth.uid
+        && request.resource.data.message is string
+        && request.resource.data.message.size() <= 4000;
+    }
+
+    // Заявки с формы «Связаться» на лендинге viktorpanteleev.ru.
+    // Анонимная запись (без Auth), читаем/правим из Firebase Console.
+    match /leads/{leadId} {
+      allow read, update, delete: if false;
+      allow create: if request.resource.data.keys().hasOnly(['name', 'contact', 'createdAt', 'source'])
+        && request.resource.data.name is string
+        && request.resource.data.name.size() > 0
+        && request.resource.data.name.size() <= 80
+        && request.resource.data.contact is string
+        && request.resource.data.contact.size() > 2
+        && request.resource.data.contact.size() <= 80;
+    }
+  }
+}
